@@ -63,7 +63,7 @@ namespace ConsoleApp1
             }
         }
 
-        public void GenerateKeyPair()
+        public static void GenerateKeyPair()
         {
             var generator = GeneratorUtilities.GetKeyPairGenerator("RSA");
 
@@ -72,10 +72,10 @@ namespace ConsoleApp1
 
             var keyPair = generator.GenerateKeyPair();
 
-            using (Stream out1 = File.Create("secret.asc"))
-            using (Stream out2 = File.Create("pub.asc"))
+            using (Stream secretOut = File.Create("secret.asc"))
+            using (Stream publicOut = File.Create("pub.asc"))
             {
-                ExportKeyPair(out1, out2, keyPair.Public, keyPair.Private, "james.lappin@checkout.com",
+                ExportKeyPair(secretOut, publicOut, keyPair.Public, keyPair.Private, "james.lappin@checkout.com",
                     "knownpassword".ToCharArray(), true);
             }
         }
