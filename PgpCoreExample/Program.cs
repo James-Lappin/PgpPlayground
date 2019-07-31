@@ -7,18 +7,25 @@ namespace PgpCoreExample
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var p = new Program();
+            p.Do();
         }
 
-        public void Do()
+        private void Do()
         {
             using (PGP pgp = new PGP())
             {
-                // Generate keys
-                pgp.GenerateKey(@"C:\TEMP\keys\public.asc", @"C:\TEMP\keys\private.asc", "email@email.com", "password");
                 // Encrypt file
-                pgp.EncryptFile(@"C:\TEMP\keys\content.txt", @"C:\TEMP\keys\content__encrypted.pgp", @"C:\TEMP\keys\public.asc", true, true);
+                var inputPath = @"Messages\message.txt";
+                var encryptedMessage = "Messages\\message_by_package.txt.asc";
+                var publicKey = "Keys\\publicKey3072.asc";
+                var myPrivateKey = "Keys\\secretKey3072.asc";
+                var myPassword = "7pU3^E%AEj9gRqTxzk7G*r";
 
+                pgp.EncryptFileAndSign(inputPath, encryptedMessage, publicKey, myPrivateKey, myPassword, true,
+                    true);
+                pgp.DecryptFileAndVerify(encryptedMessage, $"{DateTime.UtcNow:yyyyMMddHHmm}.txt", publicKey,
+                    myPrivateKey, myPassword);
             }
         }
     }

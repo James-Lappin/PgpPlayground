@@ -72,10 +72,10 @@ namespace ConsoleApp1
 
             var keyPair = generator.GenerateKeyPair();
 
-            using (Stream secretOut = File.Create("secret.asc"))
-            using (Stream publicOut = File.Create("pub.asc"))
+            using (Stream secretOut = File.Create("merchant_secret.asc"))
+            using (Stream publicOut = File.Create("merchant_pub.asc"))
             {
-                ExportKeyPair(secretOut, publicOut, keyPair.Public, keyPair.Private, "james.lappin@checkout.com",
+                ExportKeyPair(secretOut, publicOut, keyPair.Public, keyPair.Private, "james.lappin+merchant@checkout.com",
                     "knownpassword".ToCharArray(), true);
             }
         }

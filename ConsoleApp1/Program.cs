@@ -13,27 +13,25 @@ namespace ConsoleApp1
             try
             {
                 //BouncyCastleCopy.GenerateKeyPair();
-                //
-                //byte[] dataBytes = File.ReadAllBytes("input.txt");
-                Stream pub = File.OpenRead("publicKey.asc");
+                
+                byte[] dataBytes = File.ReadAllBytes("input.txt");
+                Stream pub = File.OpenRead("andys_publicKey.asc");
                 Stream priv = File.OpenRead("secretKey.asc");
 
-                //Stream outStream = File.Create("data.enc");
+                //Stream outStream = File.Create("message_by_csharp.txt.asc");
                 //var dave = new CopyFromStackoverflow();
-                //
+                
                 //byte[] encrypted = dave.EncryptFile(dataBytes, string.Empty, dave.ReadPublicKey(pub));
                 //outStream.Write(encrypted, 0, encrypted.Length);
                 //outStream.Close();
 
                 var dave1 = new AnotherCopy();
-                var encryptedData = File.OpenRead("message_not_signed.txt.asc");
-                //if (dave1.VerifyFile(encryptedData, pub))
-                //{
-                //    Console.WriteLine("Yay!");
-                //}
+                var encryptedData = File.OpenRead("message_by_andy.txt.asc");
                 var decryptedStream = dave1.DecryptAndVerify(encryptedData, pub, priv, "7pU3^E%AEj9gRqTxzk7G*r".ToCharArray());
+                
                 var fileStream = File.OpenWrite($"{DateTime.UtcNow:yyyyMMddHHmm}.txt");
                 decryptedStream.CopyTo(fileStream);
+                
                 fileStream.Close();
                 decryptedStream.Close();
                 encryptedData.Close();

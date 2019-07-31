@@ -1,0 +1,15 @@
+version: 3.5
+services:
+  sftp:
+    cap_add:
+      - SYS_ADMIN
+    container_name: sftp
+    build:
+      context: ./docker-setup/sftp
+      dockerfile: Dockerfile
+    volumes:
+      - ./ftp:/home/foo/upload
+      - ./ftp:/home/user/upload
+    ports:
+      - "2222:22"
+    command: foo:pass:::upload user:pass:::upload
